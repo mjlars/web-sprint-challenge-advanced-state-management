@@ -1,21 +1,63 @@
-
+import {GET_SMURF_START, GET_SMURF_SUCCESS, GET_SMURF_FAIL, POST_SMURF_START, POST_SMURF_SUCCESS, POST_SMURF_FAIL} from "../actions/index"
 export const initialState = {
+    smurfs: [],
+    isFetching: false,
+    isPosting: false,
+    error: ''
 }
 
-const reducer = ()=>{
+ export const reducer = (state = initialState, action) => {
+    switch(action.type){
+        case(GET_SMURF_START):
+            return({
+                ...state,
+                isFetching: true,
+                error: ''
+            })
+        case(GET_SMURF_SUCCESS):
+            return({
+                ...state,
+                smurfs: [...action.payload],
+                isFetching: false,
+            })
+        case(GET_SMURF_FAIL):
+            return({
+                ...state,
+                isFetching: false,
+                error: " You done Smur*ed up "
+            })
+        case(POST_SMURF_START):
+            return({
+                ...state,
+                isPosting: true,
+            })
+        case(POST_SMURF_SUCCESS):
+            return({
+                ...state,
+                smurfs: [...action.payload],
+                isPosting: false,
+            })
+        case(POST_SMURF_FAIL):
+            return({
+                ...state,
+                isPosting: false,
+                error: "You smurfed up"
+            })
+        default:
+            return state;
+    }
 }
 
-export default reducer;
 
 //Task List:
-//1. Adds the following state values into the initialState:
-//  - an array of smurfs
-//  - a boolean indicating if the app is loading
-//  - a string indicating a possible error message
-
-//2. Add in the arguments needed to complete a standard reducer function.
-//3. Add in a reducer case to accomidate the start of a smurf fetch.
-//4. Add in a reducer case to accomidate the successful smurf api fetch.
-//5. Add in a reducer cases to accomidate the failed smurf api fetch.
-//6. Add in a reducer case to accomidate adding a smurf (including the name, nickname, position, summary and an internally generated id) into your smurf list.
-//7. Add in a reducer case that adds in a value to the error message.
+//1. Add in the initialState needed to hold: 
+//      - an array of smurfs
+//      - a boolean indicating if the app is loading
+//      - error text
+//2. Setup your reducer to take the state and action as peremeters
+//3. Add in cases to your reducer to handle:
+//      - The start of an api call
+//      - The end of an api call
+//      - The adding a smurf to the smurf list when added into payload
+//      - Setting Error Text
+//      - Any other state changes you see as necessary
